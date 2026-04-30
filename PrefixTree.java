@@ -61,7 +61,7 @@ public class PrefixTree{
     public void decode (String encodings){
         dind = 0;
         decodeStr = "";
-        printEncodings(root, encodings);
+        printEncodings(encodings);
         System.out.println(decodeStr);
         System.out.println("Number of bits: " +encodings.length());
         System.out.println("Number of characters: " + decodeStr.length());
@@ -70,7 +70,7 @@ public class PrefixTree{
 
 
     }
-    public void printEncodings(Node x, String s){
+  /*  public void printEncodings(Node x, String s){ //causing stackoverflow when printing decoded large txt file
         if(x.c != '*') {
             decodeStr = decodeStr + x.c;
             x = root;
@@ -89,6 +89,28 @@ public class PrefixTree{
 
         }
         return;
+
+    }*/
+
+    public void printEncodings(String s){
+        Node current = root;
+        while (dind < s.length()){
+            if (current.c != '*') {
+                decodeStr = decodeStr + current.c;
+                current = root;
+                continue;
+
+            }
+
+            char ch = s.charAt(dind);
+            dind ++;
+
+            if (ch == '0') {current = current.left;}
+            if (ch == '1') {current = current.right;}
+
+        }
+
+        if (current.c != '0') {decodeStr = decodeStr + current.c;}
 
     }
 
